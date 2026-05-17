@@ -114,23 +114,22 @@
         [data-theme="dark"] .theme-toggle-btn .fa-moon { display: none; }
         [data-theme="dark"] .theme-toggle-btn .fa-sun { display: block; }
 
-        /* --- HERO SECTION (SPLIT LEFT/RIGHT DESIGN) --- */
+        /* --- HERO SECTION --- */
         .hero {
             max-width: 1100px;
             margin: 0 auto;
             padding: 8rem 2rem 4rem 2rem;
             display: grid;
-            grid-template-columns: 1fr auto; /* Text takes left, picture takes content width on right */
+            grid-template-columns: 1fr auto;
             gap: 4rem;
             align-items: center;
             position: relative;
         }
 
-        /* Left Side Content Stack */
         .hero-content {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Aligns all text items perfectly to the left */
+            align-items: flex-start;
             text-align: left;
         }
 
@@ -186,27 +185,31 @@
             display: inline-block;
         }
 
-        /* Right Side Bigger Profile Holder */
+        /* Modern Rectangular Profile Card */
         .profile-holder {
-            width: 190px; /* Made bigger as requested */
-            height: 190px; /* Made bigger as requested */
-            border-radius: 50%;
+            width: 200px;
+            height: 250px;
+            border-radius: 16px;
             background: var(--glass-bg);
-            border: 2px dashed var(--glass-border);
+            border: 1px solid var(--glass-border);
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 30px var(--glow-pink);
+            box-shadow: 0 10px 30px -10px var(--glow-pink);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-holder:hover {
+            transform: scale(1.03);
         }
 
         .profile-holder img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
         }
 
         .btn-view {
@@ -346,7 +349,7 @@
         /* --- RESPONSIVENESS --- */
         @media (max-width: 768px) {
             .hero { 
-                grid-template-columns: 1fr; /* Stack vertically on small screens */
+                grid-template-columns: 1fr;
                 padding-top: 6rem; 
                 gap: 2rem;
             }
@@ -360,9 +363,9 @@
             .hero-name { font-size: 2.8rem; }
             .hero-portfolio-tag { font-size: 1.1rem; }
             .profile-holder {
-                width: 150px;
-                height: 150px;
-                grid-row: 1; /* Puts image on top only for mobile layout balance */
+                width: 160px;
+                height: 200px;
+                grid-row: 1;
             }
             .container { padding: 2rem 1.5rem; }
             
@@ -396,7 +399,7 @@
         </div>
 
         <div class="profile-holder">
-            <span>[ Picture Holder ]</span>
+            <img src="XAFSA.PNG" alt="Hafsa Mohamed">
         </div>
 
     </header>
