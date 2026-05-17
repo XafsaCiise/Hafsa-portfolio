@@ -1,145 +1,435 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hafsa Mohamed | Portfolio</title>
+    <!-- Professional Typography & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-    }
+    <style>
+        /* --- CONFIGURATION & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-    header {
-      padding: 80px 20px;
-      text-align: center;
-    }
+        /* Light Theme (Default: Soft Pink/Purple Pastels) */
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #f3e8ff 50%, #fae8ff 100%);
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(168, 85, 247, 0.16);
+            --text-primary: #2e1065; /* Deep purple for high contrast text */
+            --text-secondary: #6b21a8;
+            --glow-pink: rgba(244, 114, 182, 0.25);
+            --glow-purple: rgba(168, 85, 247, 0.25);
+            --accent-gradient: linear-gradient(to right, #db2777, #9333ea);
+            --toggle-bg: rgba(147, 51, 234, 0.08);
+            --card-shadow: 0 10px 30px -10px rgba(147, 51, 234, 0.1);
+        }
 
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
+        /* Dark Theme Toggle State (Rich Purple/Pink Cyber Theme) */
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0d0614 0%, #1a0b2e 50%, #12031c 100%);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(244, 114, 182, 0.12);
+            --text-primary: #fae8ff;
+            --text-secondary: #d8b4fe;
+            --glow-pink: rgba(244, 114, 182, 0.4);
+            --glow-purple: rgba(168, 85, 247, 0.4);
+            --accent-gradient: linear-gradient(to right, #f472b6, #c084fc);
+            --toggle-bg: rgba(255, 255, 255, 0.06);
+            --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
 
-    .subtitle {
-      color: #94a3b8;
-      font-size: 18px;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    section {
-      max-width: 900px;
-      margin: auto;
-      padding: 60px 20px;
-    }
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease;
+        }
 
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      margin: 10px 0;
-      border-radius: 10px;
-    }
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-    }
+        .section-title {
+            text-align: center;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: -0.03em;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    a {
-      color: #38bdf8;
-      text-decoration: none;
-    }
+        /* --- THEME TOGGLE BUTTON --- */
+        .theme-toggle-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
 
-    footer {
-      text-align: center;
-      padding: 40px;
-      color: #64748b;
-    }
-  </style>
+        .theme-toggle-btn {
+            background: var(--toggle-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            color: var(--text-primary);
+        }
+
+        .theme-toggle-btn .fa-sun { display: none; }
+        [data-theme="dark"] .theme-toggle-btn .fa-moon { display: none; }
+        [data-theme="dark"] .theme-toggle-btn .fa-sun { display: block; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .profile-holder {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 2px dashed var(--glass-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 25px var(--glow-pink);
+        }
+
+        .profile-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 3.25rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 0.75rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .btn-view {
+            display: inline-block;
+            padding: 0.8rem 2.2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .btn-view:hover {
+            transform: translateY(-2px);
+            color: var(--text-primary);
+            border-color: rgba(244, 114, 182, 0.5);
+            box-shadow: 0 0 20px var(--glow-purple);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .about p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        /* Glassmorphism Cards */
+        .service-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .service-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Interactive Card Animations */
+        .service-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(244, 114, 182, 0.5);
+            box-shadow: 0 15px 30px -10px var(--glow-purple), 
+                        0 0 15px -2px var(--glow-pink);
+        }
+
+        /* --- PROJECTS SECTION --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-placeholder {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px dashed var(--glass-border);
+            border-radius: 20px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-secondary);
+            padding: 2rem;
+        }
+
+        .project-placeholder i {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--card-shadow);
+        }
+
+        .contact-item:hover {
+            color: var(--text-primary);
+            transform: translateY(-4px);
+            border-color: #c084fc;
+            box-shadow: 0 0 15px var(--glow-purple);
+        }
+
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.3rem; }
+            .hero p { font-size: 1rem; }
+            .container { padding: 4rem 1.5rem; }
+            
+            .services-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- HERO -->
-  <header>
-    <h1>Your Name</h1>
-    <p class="subtitle">Database & Data Handling Assistant</p>
-  </header>
-
-  <!-- ABOUT -->
-  <section>
-    <h2>About Me</h2>
-    <div class="card">
-      I work with databases, SQL queries, and Excel data organization.
-      I help structure and clean data for simple systems and applications.
+    <!-- LIGHT / DARK THEME TOGGLE -->
+    <div class="theme-toggle-container">
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+            <i class="fa-solid fa-sun"></i>
+        </button>
     </div>
-  </section>
 
-  <!-- SERVICES -->
-  <section>
-    <h2>Services</h2>
+    <!-- 1. HERO SECTION -->
+    <header class="hero">
+        <div class="profile-holder">
+            <!-- Add image link later: <img src="pfp.jpg" alt="Hafsa Mohamed"> -->
+            <span>[ Picture Holder ]</span>
+        </div>
+        
+        <h1>Welcome to Hafsa Mohamed's Portfolio</h1>
+        <p>Database & Data Handling Assistant</p>
+        
+        <a href="#projects" class="btn-view">View Projects</a>
+    </header>
 
-    <div class="grid">
+    <!-- 2. ABOUT SECTION -->
+    <section class="container" id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about">
+            <p>
+                Focused on databases, structured SQL architectures, and expert Excel frameworks. 
+                I map raw records into clean, scalable data components to streamline modern workflows.
+            </p>
+        </div>
+    </section>
 
-      <div class="card">
-        <h3>Database Design</h3>
-        <p>Design simple relational databases with clean structure.</p>
-      </div>
+    <!-- 3. SERVICES SECTION -->
+    <section class="container" id="services">
+        <h2 class="section-title">Services</h2>
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <span class="emoji">💻</span>
+                <h3>Database Design</h3>
+            </div>
 
-      <div class="card">
-        <h3>SQL Queries</h3>
-        <p>Write SELECT, JOIN, and data filtering queries.</p>
-      </div>
+            <div class="service-card">
+                <span class="emoji">🧾</span>
+                <h3>SQL Query Writing</h3>
+            </div>
 
-      <div class="card">
-        <h3>Excel Data Work</h3>
-        <p>Clean and organize data using Excel formulas.</p>
-      </div>
+            <div class="service-card">
+                <span class="emoji">📊</span>
+                <h3>Excel Data Cleaning</h3>
+            </div>
 
-      <div class="card">
-        <h3>Data Cleanup</h3>
-        <p>Fix and structure messy datasets.</p>
-      </div>
+            <div class="service-card">
+                <span class="emoji">🗂️</span>
+                <h3>Data Organization</h3>
+            </div>
 
-      <div class="card">
-        <h3>Simple Database Setup</h3>
-        <p>Create basic databases for small systems.</p>
-      </div>
+            <div class="service-card">
+                <span class="emoji">🛠️</span>
+                <h3>Simple Database Setup</h3>
+            </div>
 
-    </div>
-  </section>
+        </div>
+    </section>
 
-  <!-- SKILLS -->
-  <section>
-    <h2>Skills</h2>
-    <div class="card">
-      SQL • Database Design • Excel • Data Cleaning • Basic System Structuring
-    </div>
-  </section>
+    <!-- 4. PROJECTS SECTION -->
+    <section class="container" id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            
+            <div class="project-placeholder">
+                <i class="fa-solid fa-database"></i>
+                <h3>Coming soon</h3>
+            </div>
 
-  <!-- PROJECTS (EMPTY FOR NOW) -->
-  <section>
-    <h2>Projects</h2>
-    <div class="card">
-      Coming soon — working on real database projects.
-    </div>
-  </section>
+            <div class="project-placeholder">
+                <i class="fa-solid fa-chart-simple"></i>
+                <h3>Coming soon</h3>
+            </div>
 
-  <!-- CONTACT -->
-  <section>
-    <h2>Contact</h2>
-    <div class="card">
-      Email: your@email.com <br />
-      <a href="https://www.linkedin.com">LinkedIn</a> |
-      <a href="https://github.com">GitHub</a>
-    </div>
-  </section>
+        </div>
+    </section>
 
-  <footer>
-    Built with GitHub Pages
-  </footer>
+    <!-- 5. CONTACT SECTION -->
+    <footer class="container" id="contact">
+        <h2 class="section-title">Connect</h2>
+        <div class="contact-links">
+            
+            <a href="mailto:your.email@example.com" class="contact-item" title="Email">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
 
+            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="contact-item" title="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+
+            <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="contact-item" title="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+
+        </div>
+    </footer>
+
+    <!-- INTERACTION SCRIPT FOR LIGHT/DARK TOGGLE -->
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+        });
+    </script>
 </body>
 </html>
