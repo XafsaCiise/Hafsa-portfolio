@@ -11,14 +11,8 @@
 
     <style>
         /* --- CONFIGURATION & VARIABLES --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        /* Light Theme (Default: Soft Pink/Purple Pastels) */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
         [data-theme="light"] {
             --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #f3e8ff 50%, #fae8ff 100%);
             --glass-bg: rgba(255, 255, 255, 0.45);
@@ -33,7 +27,6 @@
             --card-shadow: 0 10px 30px -10px rgba(147, 51, 234, 0.1);
         }
 
-        /* Dark Theme Toggle State (Rich Cyber Theme) */
         [data-theme="dark"] {
             --bg-gradient: linear-gradient(135deg, #0d0614 0%, #1a0b2e 50%, #12031c 100%);
             --glass-bg: rgba(255, 255, 255, 0.02);
@@ -48,418 +41,70 @@
             --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg-gradient); background-attachment: fixed; color: var(--text-primary); min-height: 100vh; line-height: 1.6; overflow-x: hidden; transition: background 0.4s ease, color 0.4s ease; }
 
-        body {
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease;
-        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+        .section-title { text-align: center; font-size: 2.25rem; font-weight: 700; margin-bottom: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* --- UTILITIES --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            letter-spacing: -0.03em;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* --- THEME TOGGLE BUTTON --- */
-        .theme-toggle-container {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 1000;
-        }
-
-        .theme-toggle-btn {
-            background: var(--toggle-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-secondary);
-            padding: 0.75rem;
-            border-radius: 50%;
-            cursor: pointer;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle-btn:hover {
-            transform: scale(1.1);
-            color: var(--text-primary);
-        }
-
+        /* --- THEME TOGGLE --- */
+        .theme-toggle-container { position: fixed; top: 2rem; right: 2rem; z-index: 1000; }
+        .theme-toggle-btn { background: var(--toggle-bg); border: 1px solid var(--glass-border); color: var(--text-secondary); padding: 0.75rem; border-radius: 50%; cursor: pointer; width: 45px; height: 45px; backdrop-filter: blur(8px); transition: all 0.3s ease; }
         .theme-toggle-btn .fa-sun { display: none; }
         [data-theme="dark"] .theme-toggle-btn .fa-moon { display: none; }
         [data-theme="dark"] .theme-toggle-btn .fa-sun { display: block; }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 8rem 2rem 4rem 2rem;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-        }
+        /* --- HERO --- */
+        .hero { max-width: 1100px; margin: 0 auto; padding: 8rem 2rem 4rem 2rem; display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; }
+        .hero-name { font-size: 4rem; font-weight: 800; background: var(--name-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-role { font-size: 1.05rem; color: var(--text-secondary); font-weight: 600; margin-bottom: 2rem; border: 1px solid var(--glass-border); padding: 0.4rem 1.4rem; border-radius: 50px; display: inline-block; }
+        .profile-holder { width: 200px; height: 250px; border-radius: 16px; background: var(--glass-bg); border: 1px solid var(--glass-border); overflow: hidden; box-shadow: 0 10px 30px -10px var(--glow-pink); }
+        .profile-holder img { width: 100%; height: 100%; object-fit: cover; }
+        .btn-view { display: inline-block; padding: 0.8rem 2.2rem; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-secondary); text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
+        .btn-view:hover { transform: translateY(-2px); color: var(--text-primary); box-shadow: 0 0 20px var(--glow-purple); }
 
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-        }
+        /* --- PROJECTS --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .project-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; text-align: center; backdrop-filter: blur(10px); box-shadow: var(--card-shadow); transition: transform 0.3s ease; }
+        .project-card:hover { transform: translateY(-5px); border-color: #c084fc; }
+        .project-card h3 { margin: 1rem 0; color: var(--text-primary); }
+        .project-card p { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
 
-        .hero-title-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.2rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .hero-welcome {
-            font-size: 1.1rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-secondary);
-            opacity: 0.8;
-        }
-
-        .hero-name {
-            font-size: 4rem;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            line-height: 1.1;
-            background: var(--name-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 10px var(--glow-pink));
-        }
-
-        .hero-portfolio-tag {
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--text-primary);
-            opacity: 0.9;
-        }
-
-        .hero-role {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 2rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
-            padding: 0.4rem 1.4rem;
-            border-radius: 50px;
-            box-shadow: var(--card-shadow);
-            display: inline-block;
-        }
-
-        /* Modern Rectangular Profile Card */
-        .profile-holder {
-            width: 200px;
-            height: 250px;
-            border-radius: 16px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px -10px var(--glow-pink);
-            transition: transform 0.3s ease;
-        }
-
-        .profile-holder:hover {
-            transform: scale(1.03);
-        }
-
-        .profile-holder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        .btn-view {
-            display: inline-block;
-            padding: 0.8rem 2.2rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: var(--card-shadow);
-        }
-
-        .btn-view:hover {
-            transform: translateY(-2px);
-            color: var(--text-primary);
-            border-color: rgba(244, 114, 182, 0.5);
-            box-shadow: 0 0 20px var(--glow-purple);
-        }
-
-        /* --- ABOUT SECTION --- */
-        .about {
-            text-align: center;
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-        .about p {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* --- SERVICES SECTION --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-            justify-content: center;
-        }
-
-        .service-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .service-card .emoji {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-
-        .service-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .service-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            border-color: rgba(244, 114, 182, 0.5);
-            box-shadow: 0 15px 30px -10px var(--glow-purple), 
-                        0 0 15px -2px var(--glow-pink);
-        }
-
-        /* --- PROJECTS SECTION --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-placeholder {
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px dashed var(--glass-border);
-            border-radius: 20px;
-            min-height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-secondary);
-            padding: 2rem;
-        }
-
-        .project-placeholder i {
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* --- CONTACT SECTION --- */
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
-            margin-top: 2rem;
-        }
-
-        .contact-item {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 1.4rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--card-shadow);
-        }
-
-        .contact-item:hover {
-            color: var(--text-primary);
-            transform: translateY(-4px);
-            border-color: #c084fc;
-            box-shadow: 0 0 15px var(--glow-purple);
-        }
-
-        /* --- RESPONSIVENESS --- */
-        @media (max-width: 768px) {
-            .hero { 
-                grid-template-columns: 1fr;
-                padding-top: 6rem; 
-                gap: 2rem;
-            }
-            .hero-content {
-                align-items: center;
-                text-align: center;
-            }
-            .hero-title-container {
-                align-items: center;
-            }
-            .hero-name { font-size: 2.8rem; }
-            .hero-portfolio-tag { font-size: 1.1rem; }
-            .profile-holder {
-                width: 160px;
-                height: 200px;
-                grid-row: 1;
-            }
-            .container { padding: 2rem 1.5rem; }
-            
-            .services-grid, .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        /* --- CONTACT --- */
+        .contact-links { display: flex; justify-content: center; gap: 2.5rem; margin-top: 2rem; }
+        .contact-item { color: var(--text-secondary); font-size: 1.4rem; padding: 1rem; border-radius: 50%; background: var(--glass-bg); border: 1px solid var(--glass-border); transition: 0.3s; }
+        .contact-item:hover { color: var(--text-primary); transform: translateY(-4px); border-color: #c084fc; }
     </style>
 </head>
 <body>
 
     <div class="theme-toggle-container">
-        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
-            <i class="fa-solid fa-moon"></i>
-            <i class="fa-solid fa-sun"></i>
-        </button>
+        <button class="theme-toggle-btn" id="themeToggle"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></button>
     </div>
 
     <header class="hero">
-        
         <div class="hero-content">
-            <div class="hero-title-container">
-                <span class="hero-welcome">Welcome to</span>
-                <h1 class="hero-name">Hafsa Mohamed's</h1>
-                <span class="hero-portfolio-tag">Portfolio</span>
-            </div>
-            
+            <h1>Hafsa Mohamed's</h1>
             <p class="hero-role">Database & Data Developer</p>
-            
             <a href="#projects" class="btn-view">View Projects</a>
         </div>
-
-        <div class="profile-holder">
-            <img src="XAFSA.PNG" alt="Hafsa Mohamed">
-        </div>
-
+        <div class="profile-holder"><img src="XAFSA.PNG" alt="Hafsa Mohamed"></div>
     </header>
-
-    <section class="container" id="about">
-        <h2 class="section-title">About Me</h2>
-        <div class="about">
-            <p> Hi, I'm Hafsa Mohamed — a developer with degrees in Computer Science and Information Technology, and a genuine passion for building things that work well and make sense. I specialize in designing and working with SQL-based database systems and structured data workflows, and I've had the opportunity to bring that passion to life through a range of real-world projects that sharpened both my technical and problem-solving skills.
-I'm someone who takes pride in writing clean, thoughtful solutions and approaching every challenge with curiosity and care. Whether it's structuring a database, untangling a complex workflow, or collaborating on something new, I show up ready to build.
-My goal is to grow as a developer by working on meaningful projects that push me further, contributing to teams that value good work, and continuing to expand my skills across the full scope of software and data development — one project at a time.
-            
-            
-    </p>
-        </div>
-    </section>
-
-    <section class="container" id="services">
-        <h2 class="section-title">Services</h2>
-        <div class="services-grid">
-            
-            <div class="service-card">
-                <span class="emoji">💻</span>
-                <h3>Database Design</h3>
-            </div>
-
-            <div class="service-card">
-                <span class="emoji">🧾</span>
-                <h3>SQL Query Writing</h3>
-            </div>
-
-            <div class="service-card">
-                <span class="emoji">📊</span>
-                <h3>Excel Data Cleaning</h3>
-            </div>
-
-            <div class="service-card">
-                <span class="emoji">🗂️</span>
-                <h3>Data Organization</h3>
-            </div>
-
-            <div class="service-card">
-                <span class="emoji">🛠️</span>
-                <h3>Simple Database Setup</h3>
-            </div>
-
-        </div>
-    </section>
 
     <section class="container" id="projects">
         <h2 class="section-title">Projects</h2>
         <div class="projects-grid">
             
-            <div class="project-placeholder">
-                <i class="fa-solid fa-database"></i>
-                <h3>Coming soon</h3>
+            <div class="project-card">
+                <i class="fa-solid fa-database" style="font-size: 2rem; color: #a855f7;"></i>
+                <h3>Institutional Data Portal</h3>
+                <p>Full-stack database development for institutional portals. Specialized in SQL query optimization, data integrity, and automated reconciliation workflows.</p>
             </div>
 
-            <div class="project-placeholder">
-                <i class="fa-solid fa-chart-simple"></i>
-                <h3>Coming soon</h3>
+            <div class="project-card">
+                <i class="fa-solid fa-robot" style="font-size: 2rem; color: #ec4899;"></i>
+                <h3>Caawiye AI Assistant</h3>
+                <p>AI-driven assistant for Somali language and heritage. Built with React, Tailwind, Firebase, and Gemini API to bridge linguistic gaps in LLMs.</p>
             </div>
 
         </div>
@@ -468,30 +113,17 @@ My goal is to grow as a developer by working on meaningful projects that push me
     <footer class="container" id="contact">
         <h2 class="section-title">Connect</h2>
         <div class="contact-links">
-            
-            <a href="mailto:hafsaissa759@gmail.com" class="contact-item" title="Gmail">
-                <i class="fa-solid fa-envelope"></i>
-            </a>
-
-            <a href="https://github.com/XafsaCiise" target="_blank" rel="noopener noreferrer" class="contact-item" title="GitHub">
-                <i class="fa-brands fa-github"></i>
-            </a>
-
-            <a href="https://www.linkedin.com/in/hafsa-isse" target="_blank" rel="noopener noreferrer" class="contact-item" title="LinkedIn">
-                <i class="fa-brands fa-linkedin-in"></i>
-            </a>
-
+            <a href="mailto:hafsaissa759@gmail.com" class="contact-item"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://github.com/XafsaCiise" target="_blank" class="contact-item"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/hafsa-isse" target="_blank" class="contact-item"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
     </footer>
 
     <script>
         const themeToggle = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
-
         themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            htmlElement.setAttribute('data-theme', newTheme);
+            const html = document.documentElement;
+            html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
         });
     </script>
 </body>
